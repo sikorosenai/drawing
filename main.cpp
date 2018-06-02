@@ -2,7 +2,7 @@
 #include <objidl.h>
 #include <gdiplus.h>
 #include <memory>
-
+#include "drawing.h"
 using namespace Gdiplus;
 #pragma comment (lib,"Gdiplus.lib")
 
@@ -19,6 +19,8 @@ VOID OnPaint(HDC hdc)
     {
         BitmapData data;
         spBitmap->LockBits(nullptr, ImageLockModeRead | ImageLockModeWrite, PixelFormat32bppPARGB, &data);
+		Draw((uint32_t*)(data.Scan0), data.Width, data.Height, data.Stride);
+		/*
 
         for (UINT y = 0; y < data.Height; y++)
         {
@@ -30,17 +32,19 @@ VOID OnPaint(HDC hdc)
                 *pPixel = 0xFF00FF00;
             }
         }
+		*/
         spBitmap->UnlockBits(&data);
         graphics.DrawImage(spBitmap.get(), 0, 0);
     }
     Pen linePen(Color::DarkRed);
     linePen.SetWidth(2);
-
+	/*
     //Bitmap bmp(100, 100, &graphics);
     //bmp.LockBits(nullptr, 0, )
     //graphics.Draw
     graphics.DrawLine(&linePen, 10, 10, 200, 200);
     graphics.DrawRectangle(&linePen, 100, 10, 200, 200);
+	*/
 }
 
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
